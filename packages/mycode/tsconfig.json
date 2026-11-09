@@ -1,0 +1,5 @@
+{
+  "extends": "@tsconfig/bun/tsconfig.json",
+  "compilerOptions": { "noEmit": true, "types": ["bun"], "noUncheckedIndexedAccess": false },
+  "include": ["src", "test"]
+}

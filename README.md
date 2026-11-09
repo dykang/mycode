@@ -1,3 +1,16 @@
+# mycode
+
+OpenCode fork by **dykang**, adding local project memory, a verified dynamic workflow harness, per-step model routing,
+and development skills. Experimental first increment; no measured quality or cost claim.
+
+Start with [mycode setup and usage](packages/mycode/README.md), [source adoption](packages/mycode/THIRD_PARTY.md),
+and [next increments](packages/mycode/ROADMAP.md). Run `bun mycode ui` for the fork with memory,
+or `bun mycode run "your task"` for the verified workflow after configuring your model provider.
+
+The upstream OpenCode README follows.
+
+---
+
 <p align="center">
   <a href="https://opencode.ai">
     <picture>

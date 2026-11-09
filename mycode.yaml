@@ -1,0 +1,47 @@
+version: 1
+name: verified-development
+start: plan
+maxSteps: 20
+steps:
+  - id: plan
+    onSuccess: implement
+    maxVisits: 3
+    timeoutMs: 900000
+    type: agent
+    agent: plan
+    prompt: Inspect the project and produce a concise implementation plan with acceptance criteria. Do not change files.
+  - id: implement
+    onSuccess: verify
+    maxVisits: 3
+    timeoutMs: 900000
+    type: agent
+    agent: build
+    prompt: "Implement the task. Read previous verification and review failures, fix their root cause, and run relevant tests. Preserve unrelated user changes."
+  - id: verify
+    onSuccess: review
+    onFailure: implement
+    maxVisits: 3
+    timeoutMs: 900000
+    type: command
+    command:
+      - bun
+      - run
+      - mycode:check
+  - id: review
+    onSuccess: final-verify
+    onFailure: implement
+    maxVisits: 3
+    timeoutMs: 900000
+    type: agent
+    agent: plan
+    prompt: "Review the actual working diff against the task and acceptance criteria. Check correctness, permissions and regression risks. Do not edit files. If no actionable issues remain, end with exactly <promise>APPROVED</promise>. Otherwise describe the issues and do not emit that marker."
+    promise: APPROVED
+  - id: final-verify
+    onFailure: implement
+    maxVisits: 3
+    timeoutMs: 900000
+    type: command
+    command:
+      - bun
+      - run
+      - mycode:check

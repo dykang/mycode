@@ -1,0 +1,29 @@
+{
+  "name": "@mycode/runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local memory and bounded, evidence-driven workflows for the mycode OpenCode fork",
+  "type": "module",
+  "license": "MIT",
+  "exports": {
+    ".": "./src/plugin.ts",
+    "./server": "./src/plugin.ts"
+  },
+  "bin": {
+    "mycode": "./src/cli.ts"
+  },
+  "scripts": {
+    "test": "bun test --only-failures",
+    "typecheck": "bun check --no-script",
+    "typecheck:tsc": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@opencode/plugin": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@tsconfig/bun": "catalog:",
+    "@types/bun": "catalog:",
+    "@typescript/native": "catalog:"
+  }
+}
