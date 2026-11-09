@@ -1,0 +1,45 @@
+{
+  "testedAt": "2026-11-09T00:38:23.278Z",
+  "app": "/Applications/MyCode.app",
+  "bundleId": "ai.dykang.mycode",
+  "architecture": "x64",
+  "project": "/private/var/folders/1k/xgfgwfd54cl9gnltyhwykv6c0000gn/T/mycode-desktop-qa-YXQ4gq",
+  "checks": [
+    "save a durable project memory through the installed UI",
+    "lexical memory search returns the persisted fact",
+    "another project cannot see the first project's memory",
+    "reopening the project retains its memory",
+    "forget removes exactly the selected memory",
+    "real command failure routes to repair and fresh verification; attempt history is visible",
+    "pruning is off by default, toggles on durably, and three development skills are visible",
+    "context policy persists per project"
+  ],
+  "modelCalls": 0,
+  "runId": "7cc9ca60-1947-41b6-b5a6-8105a8c633d9",
+  "trace": [
+    {
+      "step": "verify",
+      "attempt": 1,
+      "ok": false,
+      "exitCode": 1
+    },
+    {
+      "step": "repair",
+      "attempt": 2,
+      "ok": true,
+      "exitCode": 0
+    },
+    {
+      "step": "verify",
+      "attempt": 3,
+      "ok": true,
+      "exitCode": 0
+    },
+    {
+      "step": "final-verify",
+      "attempt": 4,
+      "ok": true,
+      "exitCode": 0
+    }
+  ]
+}

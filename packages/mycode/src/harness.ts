@@ -88,7 +88,7 @@ export async function runHarness(
         env: options.env,
         signal: options.signal,
       })
-      await trace("step.finished", { step: step.id, ok: result.ok, exitCode: result.exitCode })
+      await trace("step.finished", { step: step.id, attempt: state.attempts, ok: result.ok, exitCode: result.exitCode })
       if (options.signal?.aborted) {
         state = { ...state, status: "interrupted", error: "Run interrupted; current step must be retried" }
         break

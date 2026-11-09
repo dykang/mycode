@@ -4,6 +4,20 @@ An experimental development layer in [dykang/mycode](https://github.com/dykang/m
 This first increment adds working project memory and a bounded workflow harness. It does not claim a measured
 model-quality, token-cost, or task-success improvement over upstream.
 
+## macOS desktop
+
+The fork now packages a native **MyCode.app** with its own app ID, runtime directories, compiled CLI and bundled
+server/GUI plugin. See the [main README](../../README.md) for the DMG download, four real installed-app screenshots,
+detailed feature behavior and references. The current DMG is an unsigned Intel Mac development build.
+
+Open **Settings → MyCode**, load a project root, and use **Memory**, **Workflow**, or **Context & skills**. The GUI
+reads the actual memory database, workflow YAML, execution trace and registered skill inventory through authenticated,
+location-scoped RPC. Workflow state is refreshed with the **Refresh** button. UI project selection clears the previous
+snapshot before loading another project. Native UI test evidence is in [desktop-validation.md](../../docs/desktop-validation.md).
+
+`bun run mycode:dmg` builds a DMG on macOS. `node packages/mycode/script/desktop-qa.mjs` drives the installed app
+through localhost CDP, creates isolated temporary Git projects, checks eight UI behaviors, and saves screenshots.
+
 ## Run
 
 Requires **Bun 1.4.4**, as pinned by the root package manager field.
@@ -100,10 +114,12 @@ Duplicate tool-output pruning is **off by default**. To opt in, configure the pa
 
 ```json
 {
-  "plugin": [{
-    "package": "/absolute/path/to/mycode/packages/mycode",
-    "options": { "prune": true, "protectRecent": 6, "contextChars": 6000, "recallLimit": 5 }
-  }]
+  "plugin": [
+    {
+      "package": "/absolute/path/to/mycode/packages/mycode",
+      "options": { "prune": true, "protectRecent": 6, "contextChars": 6000, "recallLimit": 5 }
+    }
+  ]
 }
 ```
 
@@ -117,11 +133,11 @@ not DCP code, and there is no measured token-saving claim.
 
 Each run writes `.mycode/runs/<id>/`:
 
-| File | Purpose |
-| --- | --- |
-| `state.json` | Validated workflow snapshot, pending step, attempt counts and latest results |
-| `trace.jsonl` | Step-start, step-finish and run-outcome events |
-| `<attempt>-<step>.stdout` / `.stderr` | Raw subprocess evidence, retained across resume attempts |
+| File                                  | Purpose                                                                      |
+| ------------------------------------- | ---------------------------------------------------------------------------- |
+| `state.json`                          | Validated workflow snapshot, pending step, attempt counts and latest results |
+| `trace.jsonl`                         | Step-start, step-finish and run-outcome events                               |
+| `<attempt>-<step>.stdout` / `.stderr` | Raw subprocess evidence, retained across resume attempts                     |
 
 `.mycode/` is gitignored in this fork. Ignore it in other projects too: it contains private task text and outputs.
 State writes replace a temporary file atomically. Interrupted/execution-error runs retry the saved current step;

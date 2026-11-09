@@ -24,4 +24,5 @@ jobs:
           bun-version-file: package.json
       - run: bun install --frozen-lockfile --ignore-scripts --filter @mycode/runtime
       - run: bun run --cwd packages/mycode typecheck:tsc
+      - run: bun run --cwd packages/mycode build
       - run: bun run --cwd packages/mycode test

@@ -8,6 +8,7 @@
   "packageManager": "bun@1.4.4",
   "scripts": {
     "mycode": "bun packages/mycode/src/cli.ts",
+    "mycode:dmg": "bun packages/mycode/script/package-macos.ts",
     "mycode:check": "bun run --cwd packages/mycode typecheck && bun run --cwd packages/mycode test",
     "dev": "bun run --cwd packages/cli src/index.ts",
     "dev:live": "sh -c 'OPENCODE_TUI_CHANNEL=dev OPENCODE_PASSWORD=\"$(opencode service get password)\" exec bun run dev \"$@\" --server \"$(opencode service status)\"' --",

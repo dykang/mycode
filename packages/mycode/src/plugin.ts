@@ -6,16 +6,30 @@ import { z } from "zod"
 import { PluginOptions, stateDirectory } from "./config"
 import { MemoryInput, MemoryStore, memoryContext } from "./memory"
 import { pruneContext } from "./context"
+import { registerControl } from "./control"
 
 export default Plugin.define({
   id: "mycode.runtime",
   async setup(ctx) {
-    const options = PluginOptions.parse(ctx.options)
+    const settingsFile = path.join(stateDirectory(ctx.location.project.canonical), "context.json")
+    const stored = (await Bun.file(settingsFile).exists())
+      ? z.object({ prune: z.boolean() }).parse(await Bun.file(settingsFile).json())
+      : {}
+    let options = PluginOptions.parse({ ...stored, ...ctx.options })
     const memory = options.memory
       ? new MemoryStore(path.join(stateDirectory(ctx.location.project.canonical), "memory.sqlite"))
       : undefined
     const registrations: Registration[] = []
     try {
+      registrations.push(
+        await registerControl(ctx, memory, {
+          get: () => options.prune,
+          set: async (enabled) => {
+            await Bun.write(settingsFile, JSON.stringify({ prune: enabled }))
+            options = { ...options, prune: enabled }
+          },
+        }),
+      )
       if (memory) {
         registrations.push(
           await ctx.tool.transform((editor) => {

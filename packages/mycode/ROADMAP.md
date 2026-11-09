@@ -2,6 +2,9 @@
 
 The initial implementation is local memory + a sequential conditional workflow. This is the backlog, not shipped behavior.
 
+The macOS increment now includes a native GUI for memory, workflow configuration/run history, attempt evidence,
+context policy, and the actual registered skill inventory. The remaining UI work below concerns richer TUI integration.
+
 1. Establish a reproducible evaluation set against the pinned upstream: accepted-task rate, verification failures,
    elapsed time, model cost and context size. Compare changes using the same tasks/models and preserve raw traces.
 2. Add a model/provider adapter with explicit fallback policy and spend limits. Current roles use per-step models

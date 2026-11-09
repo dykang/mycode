@@ -7,12 +7,14 @@
   "license": "MIT",
   "exports": {
     ".": "./src/plugin.ts",
-    "./server": "./src/plugin.ts"
+    "./server": "./src/plugin.ts",
+    "./gui-experimental": "./dist/gui-experimental.cjs"
   },
   "bin": {
     "mycode": "./src/cli.ts"
   },
   "scripts": {
+    "build": "bun script/build.ts",
     "test": "bun test --only-failures",
     "typecheck": "bun check --no-script",
     "typecheck:tsc": "tsc --noEmit"
@@ -24,6 +26,9 @@
   "devDependencies": {
     "@tsconfig/bun": "catalog:",
     "@types/bun": "catalog:",
-    "@typescript/native": "catalog:"
+    "@typescript/native": "catalog:",
+    "vite": "8.2.4",
+    "vite-plugin-solid": "catalog:",
+    "solid-js": "catalog:"
   }
 }

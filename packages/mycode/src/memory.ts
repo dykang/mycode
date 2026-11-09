@@ -2,14 +2,8 @@ import { Database } from "bun:sqlite"
 import { createHash } from "node:crypto"
 import { mkdirSync } from "node:fs"
 import path from "node:path"
-import { z } from "zod"
-
-export const MemoryInput = z.strictObject({
-  content: z.string().trim().min(1).max(16_000),
-  kind: z.enum(["decision", "convention", "failure", "preference"]).default("decision"),
-  source: z.string().max(512).default("manual"),
-})
-export type MemoryInput = z.input<typeof MemoryInput>
+import { MemoryInput } from "./control-contract"
+export { MemoryInput } from "./control-contract"
 export type MemoryEntry = {
   id: string
   content: string
