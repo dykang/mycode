@@ -59,7 +59,7 @@ export default defineConfig(async ({ command }) => {
       build: {
         minify: command === "build",
         rolldownOptions: {
-          input: { index: "src/main/index.ts" },
+          input: { index: process.env.OPENCODE_DESKTOP_ENTRY ?? "src/main/index.ts" },
           output: {
             format: "es",
             // DesktopPaths resolves resources from the main output directory,

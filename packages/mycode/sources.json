@@ -1,0 +1,17 @@
+{
+  "superpowers": {
+    "commit": "22f0b463e7a5e579904dd6211a520321035526f7"
+  },
+  "ralph": {
+    "commit": "7559f267b227d74d82776048697615536c2a6b2a"
+  },
+  "harness": {
+    "commit": "47de3591cb2a6d6255253af900c1460b71618fee"
+  },
+  "slim": {
+    "commit": "9862fdee704d1d923b2691727441ece6736b5443"
+  },
+  "supermemory": {
+    "commit": "7de590ee9b715a1390215d050175d73bd4bc75e2"
+  }
+}

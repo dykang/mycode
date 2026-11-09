@@ -52,6 +52,14 @@ export const preferApplicationEnvironment = Effect.gen(function* () {
       OPENCODE_EXPERIMENTAL_FILEWATCHER: "true",
       OPENCODE_CLIENT: "desktop",
     })
+    const runtime = process.env.OPENCODE_DESKTOP_RUNTIME_ROOT
+
+    if (runtime) {
+      for (const name of ["DATA", "CONFIG", "CACHE", "STATE"])
+        process.env[`XDG_${name}_HOME`] = `${runtime}/${name.toLowerCase()}`
+    }
+
+    if (process.env.OPENCODE_DESKTOP_CONFIG) process.env.OPENCODE_CONFIG_CONTENT = process.env.OPENCODE_DESKTOP_CONFIG
   })
 })
 
@@ -59,8 +67,7 @@ export const prepareDesktop = Effect.gen(function* () {
   const path = yield* Path.Path
   const paths = yield* DesktopPaths.resolve
 
-  if (app.isPackaged || process.env.OPENCODE_DESKTOP_DISABLE_PROTOCOL_REGISTRATION !== "1")
-    app.setAsDefaultProtocolClient("opencode")
+  if (process.env.OPENCODE_DESKTOP_DISABLE_PROTOCOL_REGISTRATION !== "1") app.setAsDefaultProtocolClient("opencode")
   const runFork = Effect.runForkWith(yield* Effect.context())
   setProtocolReporter((level, message, data) =>
     runFork(scoped("protocol", level === "error" ? Effect.logError(message, data) : Effect.logWarning(message, data))),
